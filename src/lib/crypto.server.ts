@@ -14,7 +14,7 @@ export async function encrypt(plain: string) {
   return `${b64(iv)}.${b64(ct)}`;
 }
 export async function decrypt(blob: string) {
-  const [iv, ct] = blob.split(".");
+  const [iv = "", ct = ""] = blob.split(".");
   const pt = await crypto.subtle.decrypt({ name: "AES-GCM", iv: unb64(iv) }, await key(), unb64(ct));
   return new TextDecoder().decode(pt);
 }

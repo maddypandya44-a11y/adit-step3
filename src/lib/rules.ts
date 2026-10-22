@@ -2,7 +2,7 @@
 export const SENIOR_TITLE = /\b(senior|sr\.?|staff|principal|lead|director|head of|vp)\b/i;
 export const CAP = 3;
 
-export type RuleInput = { score: number; title: string; seniority?: string | null; skillsFit?: "strong" | "partial" | "weak"; domainFit?: "strong" | "partial" | "weak" };
+export type RuleInput = { score: number; title: string; seniority?: string | null | undefined; skillsFit?: "strong" | "partial" | "weak"; domainFit?: "strong" | "partial" | "weak" };
 export type RuleOutput = { score: number; rule: string | null };
 
 export function applyScoringRules(i: RuleInput): RuleOutput {

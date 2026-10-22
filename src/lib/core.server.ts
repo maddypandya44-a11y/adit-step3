@@ -57,7 +57,7 @@ const BatchSchema = z.object({
   scores: z.array(z.object({ id: z.string(), score: z.number().min(0).max(10), reason: z.string(), skills_fit: z.enum(["strong", "partial", "weak"]), domain_fit: z.enum(["strong", "partial", "weak"]) })),
 });
 
-export type ScoreSummary = { scored: number; estimated: boolean; message?: string; alerts: number };
+export type ScoreSummary = { scored: number; estimated: boolean; message?: string | undefined; alerts: number };
 
 /** Score open jobs not yet in job_scores against the active resume (JobRadar style), batching 6 jobs per AI call. */
 export async function scoreJobsForUser(db: Db, userId: string, limit = 30): Promise<ScoreSummary> {
@@ -81,7 +81,7 @@ export async function scoreJobsForUser(db: Db, userId: string, limit = 30): Prom
     if (res && !res.ok) { estimated = true; message = res.message; }
     const rows = batch.map((j) => {
       const ai = res?.ok ? res.data.scores.find((s) => s.id === j.id) : undefined;
-      const out = ai ? applyScoringRules({ score: ai.score, title: j.title, seniority: profile?.seniority, skillsFit: ai.skills_fit, domainFit: ai.domain_fit }) : estimatedScore(j.match_score, j.title, profile?.seniority);
+      const out = ai ? applyScoringRules({ score: ai.score, title: j.title, seniority: profile?.seniority ?? null, skillsFit: ai.skills_fit, domainFit: ai.domain_fit }) : estimatedScore(j.match_score, j.title, profile?.seniority ?? null);
       return { user_id: userId, job_id: j.id, resume_id: resume.id, llm_score: out.score, rule_applied: out.rule, reason: ai?.reason ?? `Estimated from keyword match (${j.match_score ?? 0}%).`, model: ai && res?.ok ? res.model : "estimated", _title: j.title, _company: j.company };
     });
     const { error } = await db.from("job_scores").upsert(rows.map(({ _title, _company, ...r }) => r), { onConflict: "job_id,resume_id" });
