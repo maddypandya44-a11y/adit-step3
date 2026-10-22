@@ -1,29 +1,30 @@
-# Welcome to your Lovable project
+# Workly
 
-This project was built with [Lovable](https://lovable.dev).
+Your job search, on autopilot — free for everyone.
 
-## Build with Lovable
-
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+- **Resume match** — paste your resume and a job description to see a 0–100 match score, matched/missing keywords, and suggestions.
+- **Radar** — watch companies on Greenhouse, Lever and Ashby job boards; new roles are matched against your saved resume automatically.
+- **Applications** — a simple tracker from saved → applied → interview → offer → rejected.
 
 ## Development
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
-
 ```sh
-git clone <this-repository-url>
-cd <repository-name>
 npm i
 npm run dev
 ```
 
-## Built with
+## Credits
 
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
+- Keyword matching inspired by [Resume-Matcher](https://github.com/srbhr/Resume-Matcher) — the local matcher in `src/lib/match.ts` is our TypeScript adaptation of its keyword-extraction idea.
+- Built with [Lovable](https://lovable.dev).
+
+<!-- LOVABLE:BEGIN -->
+> [!IMPORTANT]
+> This project is connected to [Lovable](https://lovable.dev). Avoid rewriting
+> published git history — force pushing, or rebasing/amending/squashing commits
+> that are already pushed — as it rewrites history on Lovable's side and the
+> user will likely lose their project history.
+>
+> Commits you push to the connected branch sync back into Lovable and show up in
+> the editor, ready for your next prompt.
+<!-- LOVABLE:END -->
