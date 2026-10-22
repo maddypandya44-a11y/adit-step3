@@ -19,6 +19,7 @@ import { Route as AuthenticatedJobsRouteImport } from './routes/_authenticated/j
 import { Route as AuthenticatedRadarRouteImport } from './routes/_authenticated/radar'
 import { Route as AuthenticatedResumeRouteImport } from './routes/_authenticated/resume'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
+import { Route as AuthenticatedPackageIdRouteImport } from './routes/_authenticated/package.$id'
 import { Route as ApiPublicCronDailyScanRouteImport } from './routes/api/public/cron/daily-scan'
 
 const IndexRoute = IndexRouteImport.update({
@@ -71,6 +72,11 @@ const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedPackageIdRoute = AuthenticatedPackageIdRouteImport.update({
+  id: '/package/$id',
+  path: '/package/$id',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const ApiPublicCronDailyScanRoute = ApiPublicCronDailyScanRouteImport.update({
   id: '/api/public/cron/daily-scan',
   path: '/api/public/cron/daily-scan',
@@ -87,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/radar': typeof AuthenticatedRadarRoute
   '/resume': typeof AuthenticatedResumeRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/package/$id': typeof AuthenticatedPackageIdRoute
   '/api/public/cron/daily-scan': typeof ApiPublicCronDailyScanRoute
 }
 export interface FileRoutesByTo {
@@ -99,6 +106,7 @@ export interface FileRoutesByTo {
   '/radar': typeof AuthenticatedRadarRoute
   '/resume': typeof AuthenticatedResumeRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/package/$id': typeof AuthenticatedPackageIdRoute
   '/api/public/cron/daily-scan': typeof ApiPublicCronDailyScanRoute
 }
 export interface FileRoutesById {
@@ -113,6 +121,7 @@ export interface FileRoutesById {
   '/_authenticated/radar': typeof AuthenticatedRadarRoute
   '/_authenticated/resume': typeof AuthenticatedResumeRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/_authenticated/package/$id': typeof AuthenticatedPackageIdRoute
   '/api/public/cron/daily-scan': typeof ApiPublicCronDailyScanRoute
 }
 export interface FileRouteTypes {
@@ -127,6 +136,7 @@ export interface FileRouteTypes {
     | '/radar'
     | '/resume'
     | '/settings'
+    | '/package/$id'
     | '/api/public/cron/daily-scan'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -139,6 +149,7 @@ export interface FileRouteTypes {
     | '/radar'
     | '/resume'
     | '/settings'
+    | '/package/$id'
     | '/api/public/cron/daily-scan'
   id:
     | '__root__'
@@ -152,6 +163,7 @@ export interface FileRouteTypes {
     | '/_authenticated/radar'
     | '/_authenticated/resume'
     | '/_authenticated/settings'
+    | '/_authenticated/package/$id'
     | '/api/public/cron/daily-scan'
   fileRoutesById: FileRoutesById
 }
@@ -235,6 +247,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSettingsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/package/$id': {
+      id: '/_authenticated/package/$id'
+      path: '/package/$id'
+      fullPath: '/package/$id'
+      preLoaderRoute: typeof AuthenticatedPackageIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/api/public/cron/daily-scan': {
       id: '/api/public/cron/daily-scan'
       path: '/api/public/cron/daily-scan'
@@ -252,6 +271,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedRadarRoute: typeof AuthenticatedRadarRoute
   AuthenticatedResumeRoute: typeof AuthenticatedResumeRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
+  AuthenticatedPackageIdRoute: typeof AuthenticatedPackageIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -261,6 +281,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedRadarRoute: AuthenticatedRadarRoute,
   AuthenticatedResumeRoute: AuthenticatedResumeRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
+  AuthenticatedPackageIdRoute: AuthenticatedPackageIdRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
