@@ -61,7 +61,7 @@ export const tailorForJob = createServerFn({ method: "POST" })
     if (vErr) throw new Error(vErr.message);
     let { data: app } = await db.from("applications").select("id").eq("job_id", job.id).maybeSingle();
     if (!app) app = (await db.from("applications").insert({ user_id: userId, job_id: job.id, company: job.company, title: job.title, url: job.url, status: "saved" }).select("id").single()).data;
-    const { data: pkg, error } = await db.from("application_packages").insert({ user_id: userId, application_id: app?.id, job_id: job.id, resume_version_id: version.id, cover_letter: res.data.cover_letter, answers, status: "draft" }).select("id").single();
+    const { data: pkg, error } = await db.from("application_packages").insert({ user_id: userId, application_id: app?.id ?? null, job_id: job.id, resume_version_id: version.id, cover_letter: res.data.cover_letter, answers, status: "draft" }).select("id").single();
     if (error) throw new Error(error.message);
     return { ok: true as const, packageId: pkg.id };
   });
@@ -77,7 +77,7 @@ export const createFollowUps = createServerFn({ method: "POST" })
     const { data: app } = await db.from("applications").select("*").eq("id", data.applicationId).single();
     if (!app) return { created: 0 };
     const applied = new Date(app.applied_at ?? Date.now());
-    const [d5, d10] = followUpDates(applied);
+    const [d5, d10] = followUpDates(applied) as [Date, Date];
     const { callLlm } = await import("./llm.server");
     const res = await callLlm(db, userId, {
       system: "Write short, polite, specific job-application follow-ups. No flattery, no invented facts. Output {\"email1\":{\"subject\",\"body\"},\"email2\":{\"subject\",\"body\"},\"linkedin\":\"max 280 chars\"}.",

@@ -69,7 +69,7 @@ export async function pool<T, R>(items: T[], limit: number, fn: (t: T) => Promis
   const out: R[] = new Array(items.length);
   let i = 0;
   await Promise.all(Array.from({ length: Math.min(limit, items.length) }, async () => {
-    while (i < items.length) { const idx = i++; out[idx] = await fn(items[idx]); }
+    while (i < items.length) { const idx = i++; out[idx] = await fn(items[idx] as T); }
   }));
   return out;
 }
