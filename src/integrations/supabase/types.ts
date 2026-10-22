@@ -14,7 +14,509 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      ai_usage: {
+        Row: {
+          day: string
+          id: string
+          tokens_used: number
+          user_id: string
+        }
+        Insert: {
+          day?: string
+          id?: string
+          tokens_used?: number
+          user_id?: string
+        }
+        Update: {
+          day?: string
+          id?: string
+          tokens_used?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      alerts: {
+        Row: {
+          body: string
+          created_at: string
+          id: string
+          job_id: string | null
+          kind: string
+          read: boolean
+          title: string
+          user_id: string
+        }
+        Insert: {
+          body?: string
+          created_at?: string
+          id?: string
+          job_id?: string | null
+          kind: string
+          read?: boolean
+          title: string
+          user_id?: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          job_id?: string | null
+          kind?: string
+          read?: boolean
+          title?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "alerts_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      application_packages: {
+        Row: {
+          answers: Json
+          application_id: string | null
+          cover_letter: string
+          created_at: string
+          id: string
+          job_id: string | null
+          resume_version_id: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          answers?: Json
+          application_id?: string | null
+          cover_letter?: string
+          created_at?: string
+          id?: string
+          job_id?: string | null
+          resume_version_id?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Update: {
+          answers?: Json
+          application_id?: string | null
+          cover_letter?: string
+          created_at?: string
+          id?: string
+          job_id?: string | null
+          resume_version_id?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "application_packages_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: false
+            referencedRelation: "applications"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "application_packages_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "application_packages_resume_version_id_fkey"
+            columns: ["resume_version_id"]
+            isOneToOne: false
+            referencedRelation: "resume_versions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      applications: {
+        Row: {
+          applied_at: string | null
+          company: string
+          created_at: string
+          id: string
+          job_id: string | null
+          notes: string
+          status: string
+          title: string
+          updated_at: string
+          url: string | null
+          user_id: string
+        }
+        Insert: {
+          applied_at?: string | null
+          company: string
+          created_at?: string
+          id?: string
+          job_id?: string | null
+          notes?: string
+          status?: string
+          title: string
+          updated_at?: string
+          url?: string | null
+          user_id?: string
+        }
+        Update: {
+          applied_at?: string | null
+          company?: string
+          created_at?: string
+          id?: string
+          job_id?: string | null
+          notes?: string
+          status?: string
+          title?: string
+          updated_at?: string
+          url?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      follow_ups: {
+        Row: {
+          application_id: string
+          body: string
+          channel: string
+          created_at: string
+          due_at: string
+          id: string
+          sent_at: string | null
+          status: string
+          subject: string
+          user_id: string
+        }
+        Insert: {
+          application_id: string
+          body?: string
+          channel: string
+          created_at?: string
+          due_at: string
+          id?: string
+          sent_at?: string | null
+          status?: string
+          subject?: string
+          user_id?: string
+        }
+        Update: {
+          application_id?: string
+          body?: string
+          channel?: string
+          created_at?: string
+          due_at?: string
+          id?: string
+          sent_at?: string | null
+          status?: string
+          subject?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "follow_ups_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: false
+            referencedRelation: "applications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      integrations: {
+        Row: {
+          access_encrypted: string | null
+          connected_at: string
+          id: string
+          provider: string
+          scopes: string[]
+          user_id: string
+        }
+        Insert: {
+          access_encrypted?: string | null
+          connected_at?: string
+          id?: string
+          provider: string
+          scopes?: string[]
+          user_id?: string
+        }
+        Update: {
+          access_encrypted?: string | null
+          connected_at?: string
+          id?: string
+          provider?: string
+          scopes?: string[]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      job_scores: {
+        Row: {
+          created_at: string
+          id: string
+          job_id: string
+          llm_score: number
+          model: string
+          reason: string
+          resume_id: string
+          rule_applied: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          job_id: string
+          llm_score: number
+          model?: string
+          reason?: string
+          resume_id: string
+          rule_applied?: string | null
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          job_id?: string
+          llm_score?: number
+          model?: string
+          reason?: string
+          resume_id?: string
+          rule_applied?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_scores_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_scores_resume_id_fkey"
+            columns: ["resume_id"]
+            isOneToOne: false
+            referencedRelation: "resumes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      jobs: {
+        Row: {
+          ats: string
+          company: string
+          description: string | null
+          external_id: string
+          first_seen_at: string
+          id: string
+          last_seen_at: string
+          location: string | null
+          match_score: number | null
+          matched_keywords: string[]
+          missing_keywords: string[]
+          status: string
+          title: string
+          url: string | null
+          user_id: string
+        }
+        Insert: {
+          ats: string
+          company: string
+          description?: string | null
+          external_id: string
+          first_seen_at?: string
+          id?: string
+          last_seen_at?: string
+          location?: string | null
+          match_score?: number | null
+          matched_keywords?: string[]
+          missing_keywords?: string[]
+          status?: string
+          title: string
+          url?: string | null
+          user_id?: string
+        }
+        Update: {
+          ats?: string
+          company?: string
+          description?: string | null
+          external_id?: string
+          first_seen_at?: string
+          id?: string
+          last_seen_at?: string
+          location?: string | null
+          match_score?: number | null
+          matched_keywords?: string[]
+          missing_keywords?: string[]
+          status?: string
+          title?: string
+          url?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          alert_email: boolean
+          created_at: string
+          daily_digest: boolean
+          display_name: string | null
+          id: string
+          llm_api_key_encrypted: string | null
+          locations: string[]
+          remote: boolean
+          salary_min: number | null
+          seniority: string | null
+          target_roles: string[]
+          updated_at: string
+          user_id: string
+          weekly_digest: boolean
+        }
+        Insert: {
+          alert_email?: boolean
+          created_at?: string
+          daily_digest?: boolean
+          display_name?: string | null
+          id?: string
+          llm_api_key_encrypted?: string | null
+          locations?: string[]
+          remote?: boolean
+          salary_min?: number | null
+          seniority?: string | null
+          target_roles?: string[]
+          updated_at?: string
+          user_id?: string
+          weekly_digest?: boolean
+        }
+        Update: {
+          alert_email?: boolean
+          created_at?: string
+          daily_digest?: boolean
+          display_name?: string | null
+          id?: string
+          llm_api_key_encrypted?: string | null
+          locations?: string[]
+          remote?: boolean
+          salary_min?: number | null
+          seniority?: string | null
+          target_roles?: string[]
+          updated_at?: string
+          user_id?: string
+          weekly_digest?: boolean
+        }
+        Relationships: []
+      }
+      resume_versions: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          job_id: string | null
+          kind: string
+          label: string
+          resume_id: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          job_id?: string | null
+          kind?: string
+          label?: string
+          resume_id: string
+          user_id?: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          job_id?: string | null
+          kind?: string
+          label?: string
+          resume_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resume_versions_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resume_versions_resume_id_fkey"
+            columns: ["resume_id"]
+            isOneToOne: false
+            referencedRelation: "resumes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      resumes: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          is_active: boolean
+          parsed: Json | null
+          title: string
+          user_id: string
+        }
+        Insert: {
+          content?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          parsed?: Json | null
+          title?: string
+          user_id?: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          parsed?: Json | null
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      watched_companies: {
+        Row: {
+          ats: string
+          created_at: string
+          id: string
+          last_scanned_at: string | null
+          name: string
+          slug: string
+          user_id: string
+        }
+        Insert: {
+          ats: string
+          created_at?: string
+          id?: string
+          last_scanned_at?: string | null
+          name: string
+          slug: string
+          user_id?: string
+        }
+        Update: {
+          ats?: string
+          created_at?: string
+          id?: string
+          last_scanned_at?: string | null
+          name?: string
+          slug?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
