@@ -19,6 +19,7 @@ import { Route as AuthenticatedJobsRouteImport } from './routes/_authenticated/j
 import { Route as AuthenticatedRadarRouteImport } from './routes/_authenticated/radar'
 import { Route as AuthenticatedResumeRouteImport } from './routes/_authenticated/resume'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
+import { Route as ApiPublicCronDailyScanRouteImport } from './routes/api/public/cron/daily-scan'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -70,6 +71,11 @@ const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const ApiPublicCronDailyScanRoute = ApiPublicCronDailyScanRouteImport.update({
+  id: '/api/public/cron/daily-scan',
+  path: '/api/public/cron/daily-scan',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -81,6 +87,7 @@ export interface FileRoutesByFullPath {
   '/radar': typeof AuthenticatedRadarRoute
   '/resume': typeof AuthenticatedResumeRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/api/public/cron/daily-scan': typeof ApiPublicCronDailyScanRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -92,6 +99,7 @@ export interface FileRoutesByTo {
   '/radar': typeof AuthenticatedRadarRoute
   '/resume': typeof AuthenticatedResumeRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/api/public/cron/daily-scan': typeof ApiPublicCronDailyScanRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -105,6 +113,7 @@ export interface FileRoutesById {
   '/_authenticated/radar': typeof AuthenticatedRadarRoute
   '/_authenticated/resume': typeof AuthenticatedResumeRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/api/public/cron/daily-scan': typeof ApiPublicCronDailyScanRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -118,6 +127,7 @@ export interface FileRouteTypes {
     | '/radar'
     | '/resume'
     | '/settings'
+    | '/api/public/cron/daily-scan'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -129,6 +139,7 @@ export interface FileRouteTypes {
     | '/radar'
     | '/resume'
     | '/settings'
+    | '/api/public/cron/daily-scan'
   id:
     | '__root__'
     | '/'
@@ -141,6 +152,7 @@ export interface FileRouteTypes {
     | '/_authenticated/radar'
     | '/_authenticated/resume'
     | '/_authenticated/settings'
+    | '/api/public/cron/daily-scan'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -148,6 +160,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   LoginRoute: typeof LoginRoute
   SignupRoute: typeof SignupRoute
+  ApiPublicCronDailyScanRoute: typeof ApiPublicCronDailyScanRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -222,6 +235,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSettingsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/public/cron/daily-scan': {
+      id: '/api/public/cron/daily-scan'
+      path: '/api/public/cron/daily-scan'
+      fullPath: '/api/public/cron/daily-scan'
+      preLoaderRoute: typeof ApiPublicCronDailyScanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -251,6 +271,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   LoginRoute: LoginRoute,
   SignupRoute: SignupRoute,
+  ApiPublicCronDailyScanRoute: ApiPublicCronDailyScanRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
